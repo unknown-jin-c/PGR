@@ -1,0 +1,17 @@
+application: pgr-example
+version: 2
+runtime: python
+api_version: 1
+
+handlers:
+
+- url: /(.*\.(gif|png|jpg|html|js))
+  static_files: static/\1
+  upload: static/(.*\.(gif|png|jpg|html|js))  
+
+- url: /services
+  script: pgr-example.py 
+  
+- url: /.*
+  static_files: static/index.html
+  upload: static/index.html

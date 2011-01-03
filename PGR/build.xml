@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+
+<project name="kapucha" basedir=".">
+
+	<property file="build.properties"/>
+    <property name="gwt.style" value="PRETTY"/>
+
+	<target name="run" depends="build">
+		<exec executable="./python">
+			<arg value="/usr/local/google_appengine/dev_appserver.py"/>
+			<arg value="bin"/>
+		</exec>
+	</target>
+	
+	<target name="build" depends="clean">
+		<antcall target="gwt-compile"/>
+		<copy todir="bin">
+            <fileset dir="src-py"/>
+		</copy>
+	</target>
+	
+	<target name="clean">
+		<delete dir="src-py/static" failonerror="false"/>
+		<delete dir="gwt-tmp" failonerror="false"/>
+	</target>
+
+
+    <target name="gwt-compile">
+    	
+    	<path id="gwt">
+            <fileset dir="${gwt.home}">
+				<include name="*.jar"/>
+            </fileset>
+            <pathelement location="src-gwt"/>
+            <pathelement location="classes"/>
+        </path>
+
+        <java classpathref="gwt"
+              classname="com.google.gwt.dev.GWTCompiler"
+              fork="true" failonerror="true">
+            <arg value="-style"/>
+            <arg value="${gwt.style}"/>
+            <arg value="-out"/>
+            <arg value="gwt-tmp"/>
+            <arg value="pl.simpatico.pgrexample.PgrExample"/>
+            <jvmarg value="-Dpgr.gen=${basedir}/py_gen"/>
+		</java>
+    	
+        <copy todir="src-py/static">
+            <fileset dir="gwt-tmp/pl.simpatico.pgrexample.PgrExample"/>
+        </copy>
+    	
+    	<delete dir="gwt-tmp" failonerror="false"/>
+
+    </target>
+
+</project>

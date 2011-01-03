@@ -1,0 +1,14 @@
+<module>
+
+	<!-- Inherit the core Web Toolkit stuff.                  -->
+	<inherits name='com.google.gwt.user.User'/>
+
+	<!-- Specify the app entry point class.                   -->
+	<entry-point class='pl.simpatico.pgrexample.client.PgrExample'></entry-point>
+	<servlet path="/services" class="pl.simpatico.kpch.gwt.blog.server.BlogServiceImpl"/> 
+	<!-- <generate-with class="pl.simpatico.rebind.VOGenerator" >
+        <when-type-assignable class="com.google.gwt.user.client.rpc.RemoteService"/>
+    </generate-with> -->
+
+  
+</module>
